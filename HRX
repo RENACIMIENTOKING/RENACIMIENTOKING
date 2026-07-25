@@ -45,7 +45,7 @@ local library = loadstring(game:HttpGet("https://pastebin.com/raw/Wbv9FYv2", tru
 
 local window = library:AddWindow("Clan HRX Hub| Private", {
     main_color = Color3.fromRGB(0, 191, 255),
-    min_size = Vector2.new(255, 255, 0),
+    min_size = Vector2.new(650, 870),
     can_resize = true,
 })
 
