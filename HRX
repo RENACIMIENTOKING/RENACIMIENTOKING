@@ -30,6 +30,7 @@ local allowedUsernames = {
     "nose_anthony",
     "juest20017",
     "andreygamer014",
+    "mactrics",
     "------"
     -- Agrega aquí los nombres de usuario que quieras
 }
