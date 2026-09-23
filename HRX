@@ -564,7 +564,7 @@ AutoFarm:AddButton("Industrial Squat", function()
     local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
     local hrp = char:WaitForChild("HumanoidRootPart")
 
-    hrp.CFrame = CFrame.new(4280.5, 987.8, -3880.2)
+    hrp.CFrame = CFrame.new(-5214.4, 60.5, 5416.4)
     task.wait(0.2)
 
     local VirtualInputManager = game:GetService("VirtualInputManager")
@@ -577,7 +577,7 @@ AutoFarm:AddButton("Industrial Lift", function()
     local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
     local hrp = char:WaitForChild("HumanoidRootPart")
 
-    hrp.CFrame = CFrame.new(4650.3, 987.8, -3915.6)
+    hrp.CFrame = CFrame.new(-5490.7, 60.5, 4641.2)
     task.wait(0.2)
 
     local VirtualInputManager = game:GetService("VirtualInputManager")
