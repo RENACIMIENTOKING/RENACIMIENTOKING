@@ -13,6 +13,7 @@ local allowedUsernames = {
     "XxrenacimientosxX",
     "maxina1166",
     "supercloud_sabe2110",
+    "TML_SAN",
 }
 
 local isAllowed = false
