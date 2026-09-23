@@ -12,6 +12,30 @@ local allowedUsernames = {
     "lucas09love2",
     "ianjajajjajajapolo1",
     "XxrenacimientosxX",
+    "Tobiasdeltaxd",
+    "Lobokil1221",
+    "eogell5",
+    "Arg_milo77",
+    "DEMON_XSYX",
+    "kitjds",
+    "samelpro1946",
+    "14580renas",
+    "jeanpinopro_2013",
+    "Supercloud_sabe2110",
+    "nehemi_123670",
+    "Ca79898",
+    "XNP_capo",
+    "Chri50585",
+    "gonzalito44426",
+    "robleis_23479",
+    "MXZ_NAGI2",
+    "38rir838rir4",
+    "nose_anthony",
+    "juest20017",
+    "andreygamer014",
+    "mactrics",
+    "lucifer_wwww",
+    "hector123098ew"
 }
 
 local isAllowed = false
@@ -192,7 +216,7 @@ AutoFarm:AddSwitch("Fast Rebirth / Fast Farm", function(state)
 end)
 
 ----------------------------------------------------------------
--- 6. OPCIONES EXTRA DE AUTOFARM
+-- 6. OPCIONES EXTRA DE AUTOFARM (STRENGTH OP POR PING & HERRAMIENTAS)
 ----------------------------------------------------------------
 getgenv()._AutoRepFarmEnabled = false  
 
@@ -559,39 +583,26 @@ AutoFarm:AddButton("Equip Swift Samurai", function()
 end)
 
 ----------------------------------------------------------------
--- TELETRANSPORTES ZONA INDUSTRIAL (NUEVAS COORDENADAS)
+-- TELETRANSPORTES ZONA INDUSTRIAL
 ----------------------------------------------------------------
+AutoFarm:AddButton("Industrial Squat", function()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    hrp.CFrame = CFrame.new(4280.5, 987.8, -3880.2)
+    task.wait(0.2)
+
+    local VirtualInputManager = game:GetService("VirtualInputManager")
+    VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.E, false, game)
+    task.wait(0.05)
+    VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
+end)
+
 AutoFarm:AddButton("Industrial Lift", function()
     local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
     local hrp = char:WaitForChild("HumanoidRootPart")
 
-    hrp.CFrame = CFrame.new(-5490.7, 60.5, 4641.2)
-    task.wait(0.2)
-
-    local VirtualInputManager = game:GetService("VirtualInputManager")
-    VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.E, false, game)
-    task.wait(0.05)
-    VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
-end)
-
-AutoFarm:AddButton("Industrial Squat 1", function()
-    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-    local hrp = char:WaitForChild("HumanoidRootPart")
-
-    hrp.CFrame = CFrame.new(-5214.4, 60.5, 5416.4)
-    task.wait(0.2)
-
-    local VirtualInputManager = game:GetService("VirtualInputManager")
-    VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.E, false, game)
-    task.wait(0.05)
-    VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
-end)
-
-AutoFarm:AddButton("Industrial Squat 2", function()
-    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-    local hrp = char:WaitForChild("HumanoidRootPart")
-
-    hrp.CFrame = CFrame.new(-5423.4, 60.5, 5446.1)
+    hrp.CFrame = CFrame.new(4650.3, 987.8, -3915.6)
     task.wait(0.2)
 
     local VirtualInputManager = game:GetService("VirtualInputManager")
@@ -723,97 +734,174 @@ local function createAutoToolSwitch(toolName, globalVar)
                 task.wait(0.1)
             end
         end)
-    Aquí tienes el script completo con los tres botones de la zona **Industrial** (Industrial Lift, Industrial Squat 1 e Industrial Squat 2) integrados con sus coordenadas exactas:
+    end)
+end
 
-```lua
-local Players = game:GetService("Players")
-local VirtualUser = game:GetService("VirtualUser")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Stats = game:GetService("Stats")
+createAutoToolSwitch("Weight", "AutoWeight")
+createAutoToolSwitch("Pushups", "AutoPushups")
+createAutoToolSwitch("Handstands", "AutoHandstands")
+createAutoToolSwitch("Situps", "AutoSitups")
 
-local LocalPlayer = Players.LocalPlayer
-
-----------------------------------------------------------------
--- 1. WHITELIST Y ACCESO
-----------------------------------------------------------------
-local allowedUsernames = {
-    "lucas09love2",
-    "ianjajajjajajapolo1",
-    "XxrenacimientosxX",
-    "Tobiasdeltaxd",
-    "Lobokil1221",
-    "eogell5",
-    "Arg_milo77",
-    "DEMON_XSYX",
-    "kitjds",
-    "samelpro1946",
-    "14580renas",
-    "jeanpinopro_2013",
-    "Supercloud_sabe2110",
-    "nehemi_123670",
-    "Ca79898",
-    "XNP_capo",
-    "Chri50585",
-    "gonzalito44426",
-    "robleis_23479",
-    "MXZ_NAGI2",
-    "38rir838rir4",
-    "nose_anthony",
-    "juest20017",
-    "andreygamer014",
-    "mactrics",
-    "lucifer_wwww",
-    "hector123098ew"
-}
-
-local isAllowed = false
-local playerUsername = string.lower(LocalPlayer.Name)
-
-for _, username in ipairs(allowedUsernames) do
-    if playerUsername == string.lower(username) then
-        isAllowed = true
-        break
+autoEquipToolsFolder:AddSwitch("Auto Punch", function(Value)
+    _G.fastHitActive = Value
+    
+    if Value then
+        task.spawn(function()
+            while _G.fastHitActive do
+                if not _G.fastHitActive then break end
+                
+                local punch = LocalPlayer.Backpack:FindFirstChild("Punch")
+                if punch then
+                    punch.Parent = LocalPlayer.Character
+                    if punch:FindFirstChild("attackTime") then
+                        punch.attackTime.Value = 0
+                    end
+                end
+                task.wait(0.1)
+            end
+        end)
+        
+        task.spawn(function()
+            while _G.fastHitActive do
+                if not _G.fastHitActive then break end
+                
+                LocalPlayer.muscleEvent:FireServer("punch", "rightHand")
+                LocalPlayer.muscleEvent:FireServer("punch", "leftHand")
+                
+                local character = LocalPlayer.Character
+                if character then
+                    local punchTool = character:FindFirstChild("Punch")
+                    if punchTool then
+                        punchTool:Activate()
+                    end
+                end
+                task.wait()
+            end
+        end)
+    else
+        local character = LocalPlayer.Character
+        local equipped = character:FindFirstChild("Punch")
+        if equipped then
+            equipped.Parent = LocalPlayer.Backpack
+        end
     end
-end
+end)
 
-if not isAllowed then
-    warn("Acceso denegado, este Script es de compra.")
-    LocalPlayer:Kick("No tienes permiso para ejecutar este Script.")
-    return
-end
-
-----------------------------------------------------------------
--- 2. ANTI-AFK
-----------------------------------------------------------------
-LocalPlayer.Idled:Connect(function()
-    VirtualUser:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-    task.wait(1)
-    VirtualUser:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-    print("Anti-AFK: Prevenido desconexión")
+autoEquipToolsFolder:AddSwitch("Fast Tools", function(Value)
+    _G.FastTools = Value
+    
+    local toolSettings = {
+        {"Punch", "attackTime", Value and 0 or 0.35},
+        {"Ground Slam", "attackTime", Value and 0 or 6},
+        {"Stomp", "attackTime", Value and 0 or 7},
+        {"Handstands", "repTime", Value and 0 or 1},
+        {"Pushups", "repTime", Value and 0 or 1},
+        {"Weight", "repTime", Value and 0 or 1},
+        {"Situps", "repTime", Value and 0 or 1}
+    }
+    
+    local backpack = LocalPlayer:WaitForChild("Backpack")
+    
+    for _, toolInfo in ipairs(toolSettings) do
+        local tool = backpack:FindFirstChild(toolInfo[1])
+        if tool and tool:FindFirstChild(toolInfo[2]) then
+            tool[toolInfo[2]].Value = toolInfo[3]
+        end
+        
+        local equippedTool = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild(toolInfo[1])
+        if equippedTool and equippedTool:FindFirstChild(toolInfo[2]) then
+            equippedTool[toolInfo[2]].Value = toolInfo[3]
+        end
+    end
 end)
 
 ----------------------------------------------------------------
--- 3. INTERFAZ GRÁFICA (GUI)
+-- 8. STATS TRACKER EN TIEMPO REAL
 ----------------------------------------------------------------
-local library = loadstring(game:HttpGet("[https://pastebin.com/raw/Wbv9FYv2](https://pastebin.com/raw/Wbv9FYv2)", true))()
+local SelectPlayerName = ""
 
-local window = library:AddWindow("Clan HRX Hub | Private", {
-    main_color = Color3.fromRGB(0, 191, 255),
-    min_size = Vector2.new(650, 870),
-    can_resize = true,
-})
+local PlayerDrop = Estadisticas:AddDropdown("Select Player", function(Value)
+    SelectPlayerName = Value:match("| (.+)") or Value
+end)
 
-local AutoFarm = window:AddTab("Fast Farm")
-local Estadisticas = window:AddTab("Stats")
+local function refreshDropdown()
+    for _, Plr in pairs(Players:GetPlayers()) do
+        PlayerDrop:Add(Plr.DisplayName .. " | " .. Plr.Name)
+    end
+end
 
-----------------------------------------------------------------
--- 4. MANEJO DE MASCOTAS (ESTILO SILENCE)
-----------------------------------------------------------------
--- Fuerza: Swift Samurai y Energy Core Dog
-local FarmPets = {"Swift Samurai", "Energy Core Dog", "Perro de núcleo de energía"}
+refreshDropdown()
 
--- Rebirth: Titanium Hydra y Tribal Overlord
-local RebirthPets = {"Titanium Hydra", "Hidra de titanio", "Tribal Overlord"}
+local function FormatNumberWithCommas(number)
+    local formatted = tostring(number):reverse():gsub("(%d%d%d)", "%1,"):reverse()
+    return formatted:gsub("^,", "")
+end
 
-local function unequipAllPets()
-    local petsFolder = LocalPlayer:FindFirstChild("
+local function FormatAbbreviated(number)
+    local abbreviations = {"", "K", "M", "B", "T", "Qa", "Qi"}
+    local index = 1
+    while number >= 1000 and index < #abbreviations do
+        number = number / 1000
+        index = index + 1
+    end
+    return string.format("%.2f", number) .. abbreviations[index]
+end
+
+local function FormatDisplay(value)
+    return "[ " .. FormatNumberWithCommas(value) .. " | " .. FormatAbbreviated(value) .. " ]"
+end
+
+local Update1 = Estadisticas:AddLabel("Gems: -")
+local Update2 = Estadisticas:AddLabel("Strength: -")
+local Update3 = Estadisticas:AddLabel("Agility: -")
+local Update4 = Estadisticas:AddLabel("Durability: -")
+local Update5 = Estadisticas:AddLabel("Rebirths: -")
+local Update6 = Estadisticas:AddLabel("Muscle King Time: -")
+local Update10 = Estadisticas:AddLabel("Custom Size: -")
+local Update11 = Estadisticas:AddLabel("Custom Speed: -")
+local Update12 = Estadisticas:AddLabel("Evil Karma: -")
+local Update13 = Estadisticas:AddLabel("Good Karma: -")
+
+task.spawn(function()
+    while task.wait(0.5) do
+        if SelectPlayerName ~= "" then
+            local targetPlayer = Players:FindFirstChild(SelectPlayerName)
+            if targetPlayer then
+                if targetPlayer:FindFirstChild("Gems") then
+                    Update1.Text = "Gems: " .. FormatDisplay(targetPlayer.Gems.Value)
+                end
+                if targetPlayer:FindFirstChild("Agility") then
+                    Update3.Text = "Agility: " .. FormatDisplay(targetPlayer.Agility.Value)
+                end
+                if targetPlayer:FindFirstChild("Durability") then
+                    Update4.Text = "Durability: " .. FormatDisplay(targetPlayer.Durability.Value)
+                end
+                if targetPlayer:FindFirstChild("muscleKingTime") then
+                    Update6.Text = "Muscle King Time: " .. FormatDisplay(targetPlayer.muscleKingTime.Value)
+                end
+                if targetPlayer:FindFirstChild("customSize") then
+                    Update10.Text = "Custom Size: " .. FormatDisplay(targetPlayer.customSize.Value)
+                end
+                if targetPlayer:FindFirstChild("customSpeed") then
+                    Update11.Text = "Custom Speed: " .. FormatDisplay(targetPlayer.customSpeed.Value)
+                end
+                if targetPlayer:FindFirstChild("evilKarma") then
+                    Update12.Text = "Evil Karma: " .. FormatDisplay(targetPlayer.evilKarma.Value)
+                end
+                if targetPlayer:FindFirstChild("goodKarma") then
+                    Update13.Text = "Good Karma: " .. FormatDisplay(targetPlayer.goodKarma.Value)
+                end
+
+                local targetLeaderstats = targetPlayer:FindFirstChild("leaderstats")
+                if targetLeaderstats then
+                    if targetLeaderstats:FindFirstChild("Strength") then
+                        Update2.Text = "Strength: " .. FormatDisplay(targetLeaderstats.Strength.Value)
+                    end
+                    if targetLeaderstats:FindFirstChild("Rebirths") then
+                        Update5.Text = "Rebirths: " .. FormatDisplay(targetLeaderstats.Rebirths.Value)
+                    end
+                end
+            end
+        end
+    end
+end)
