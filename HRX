@@ -52,7 +52,7 @@ if not isAllowed then
     end)
     
     task.wait(0.5)
-    LocalPlayer:Kick("PARA OBTENER EL PERMISO TIENES QUE ESTAR EN EL CLAN HRX ATT RENACIMIENTOKING")
+    LocalPlayer:Kick("PARA OBTENER EL PERMISO TIENES QUE ESTAR EN EL CLAN HRX by RENACIMIENTOKING")
     return
 end
 
