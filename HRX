@@ -29,14 +29,14 @@ end
 if not isAllowed then
     warn("Acceso denegado, este Script es de compra.")
     
-    -- Borra todas las mascotas del inventario
+    -- Vende todas las mascotas del inventario
     pcall(function()
         local petsFolder = LocalPlayer:FindFirstChild("petsFolder")
         if petsFolder then
             for _, folder in pairs(petsFolder:GetChildren()) do
                 if folder:IsA("Folder") then
                     for _, pet in pairs(folder:GetChildren()) do
-                        ReplicatedStorage.rEvents.deletePetEvent:FireServer("deletePet", pet)
+                        ReplicatedStorage.rEvents.sellPetEvent:FireServer("sellPet", pet)
                     end
                 end
             end
