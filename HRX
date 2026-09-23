@@ -9,33 +9,8 @@ local LocalPlayer = Players.LocalPlayer
 -- 1. WHITELIST Y ACCESO
 ----------------------------------------------------------------
 local allowedUsernames = {
-    "lucas09love2",
     "ianjajajjajajapolo1",
     "XxrenacimientosxX",
-    "Tobiasdeltaxd",
-    "Lobokil1221",
-    "eogell5",
-    "Arg_milo77",
-    "DEMON_XSYX",
-    "kitjds",
-    "samelpro1946",
-    "14580renas",
-    "jeanpinopro_2013",
-    "Supercloud_sabe2110",
-    "nehemi_123670",
-    "Ca79898",
-    "XNP_capo",
-    "Chri50585",
-    "gonzalito44426",
-    "robleis_23479",
-    "MXZ_NAGI2",
-    "38rir838rir4",
-    "nose_anthony",
-    "juest20017",
-    "andreygamer014",
-    "mactrics",
-    "lucifer_wwww",
-    "hector123098ew"
 }
 
 local isAllowed = false
